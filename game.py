@@ -49,6 +49,7 @@ world = World(world_data, screen)
 
 run = True
 while run:
+    screen.clock.tick(screen.fps)
     screen.screen.blit(bg_img, (0,0))
     screen.screen.blit(sun_img, (100,100))
 
