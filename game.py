@@ -12,6 +12,9 @@ screen_height = 1000
 screen = Screen(screen_width, screen_width, 50)
 pygame.display.set_caption('Platformer')
 
+#define game variables
+game_over = 0
+
 #load images
 sun_img = pygame.image.load('img/sun.png')
 bg_img = pygame.image.load('img/sky.png')
@@ -58,10 +61,12 @@ while run:
 
     world.draw(screen)
 
-    blob_group.update()
+    if game_over == 0:
+        blob_group.update()
+        
     blob_group.draw(screen.screen)
     lava_group.draw(screen.screen)
-    player.update(screen, world )
+    game_over = player.update(screen, world, blob_group, lava_group, game_over)
 #    draw_grid()
 
 
