@@ -3,6 +3,7 @@ from pygame.locals import *
 from player import *
 from world import *
 from screen import *
+from enemy import *
 
 pygame.init()
 screen_width = 1000
@@ -45,7 +46,9 @@ world_data = [
 ]
 
 player = Player(100, screen.height - 130)
-world = World(world_data, screen)
+blob_group = pygame.sprite.Group()
+lava_group = pygame.sprite.Group()
+world = World(world_data, screen, blob_group, lava_group)
 
 run = True
 while run:
@@ -54,8 +57,12 @@ while run:
     screen.screen.blit(sun_img, (100,100))
 
     world.draw(screen)
-    player.update(screen)
-    draw_grid()
+
+    blob_group.update()
+    blob_group.draw(screen.screen)
+    lava_group.draw(screen.screen)
+    player.update(screen, world )
+#    draw_grid()
 
 
     for event in pygame.event.get():
