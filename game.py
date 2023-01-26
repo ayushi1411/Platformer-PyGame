@@ -1,9 +1,12 @@
+#PA token : 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
+
 import pygame
 from pygame.locals import *
 from player import *
 from world import *
 from screen import *
 from enemy import *
+from button import *
 
 pygame.init()
 screen_width = 1000
@@ -18,6 +21,7 @@ game_over = 0
 #load images
 sun_img = pygame.image.load('img/sun.png')
 bg_img = pygame.image.load('img/sky.png')
+restart_img = pygame.image.load('img/restart_btn.png')
 
 def draw_grid():
     for line in range(0, 20):
@@ -49,9 +53,13 @@ world_data = [
 ]
 
 player = Player(100, screen.height - 130)
+
 blob_group = pygame.sprite.Group()
 lava_group = pygame.sprite.Group()
+
 world = World(world_data, screen, blob_group, lava_group)
+
+restart_button = Button(screen.width // 2 - 50, screen.height // 2 + 100, restart_img)
 
 run = True
 while run:
@@ -63,11 +71,17 @@ while run:
 
     if game_over == 0:
         blob_group.update()
-        
+
     blob_group.draw(screen.screen)
     lava_group.draw(screen.screen)
+
     game_over = player.update(screen, world, blob_group, lava_group, game_over)
-#    draw_grid()
+
+    #if player has died
+    if game_over == -1:
+        if restart_button.draw(screen):
+            player.reset(100, screen.height - 130)
+            game_over = 0
 
 
     for event in pygame.event.get():
