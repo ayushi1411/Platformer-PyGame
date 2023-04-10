@@ -2,10 +2,12 @@ import pygame
 from pygame.locals import *
 from enemy import *
 from lava import *
+from exit import *
+from coin import *
 
 
 class World():
-    def __init__(self, data, screen, blob_group, lava_group):
+    def __init__(self, data, screen, blob_group, lava_group, exit_group, coin_group):
         self.tile_list = []
         #load images 
         dirt_img = pygame.image.load('img/dirt.png')
@@ -35,6 +37,12 @@ class World():
                 if tile == 6:
                     lava = Lava(col_count * screen.tile_size, row_count * screen.tile_size + (screen.tile_size // 2), screen)
                     lava_group.add(lava)
+                if tile == 7:
+                    coin = Coin(col_count * screen.tile_size + (screen.tile_size // 2), row_count * screen.tile_size + (screen.tile_size // 2), screen)
+                    coin_group.add(coin)
+                if tile == 8:
+                    exit = Exit(col_count * screen.tile_size, row_count * screen.tile_size - (screen.tile_size // 2), screen)
+                    exit_group.add(exit)
                 col_count += 1
             row_count += 1
 

@@ -5,7 +5,7 @@ class Player():
     def __init__(self, x, y):
         self.reset(x,y)
 
-    def update(self, screen, world, blob_group, lava_group, game_over):
+    def update(self, screen, world, blob_group, lava_group, game_over, exit_group):
         
         dx = 0
         dy = 0
@@ -76,6 +76,10 @@ class Player():
             #check for collision with lava
             if pygame.sprite.spritecollide(self, lava_group, False):
                 game_over = -1
+
+            #check for collision with exit
+            if pygame.sprite.spritecollide(self, exit_group, False):
+                game_over = 1
 
             #update player coordinates
             self.rect.x += dx
